@@ -1,0 +1,24 @@
+{
+  "product": {
+    "name": "便携式电动榨汁杯",
+    "category": "个人榨汁机",
+    "target_market": "United States",
+    "target_language": "Chinese",
+    "selling_points": ["USB 充电", "容易清洗", "便携杯身设计"],
+    "material": "食品级 BPA-free 塑料",
+    "size": "380ml",
+    "use_cases": ["早餐奶昔", "办公室", "旅行"],
+    "price_range": "¥129-¥199",
+    "brand_tone": "实用、可靠、有品质感"
+  },
+  "competitors": [
+    {
+      "title": "便携式榨汁杯 适合奶昔和果汁",
+      "bullet_points": ["可充电强劲电机", "旅行场景清洗方便"],
+      "keywords": ["便携式榨汁杯", "奶昔机", "USB 充电"],
+      "price": "¥169",
+      "rating": 4.5,
+      "review_summary": "用户喜欢便携性和容易清洗。"
+    }
+  ]
+}

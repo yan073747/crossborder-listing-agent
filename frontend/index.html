@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>跨境电商 Listing 优化 Agent</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="topbar">
+        <div>
+          <p class="eyebrow">跨境电商运营效率工具</p>
+          <h1>Listing 优化 Agent</h1>
+          <p class="subtitle">录入商品信息，导入竞品 CSV，自动生成标题、五点描述、SEO 关键词、广告文案和 A/B 评分。</p>
+        </div>
+        <div class="topActions">
+          <label class="languageSwitch">
+            生成语言
+            <select id="global_language">
+              <option value="Chinese" selected>中文</option>
+              <option value="English">英语</option>
+              <option value="Japanese">日语</option>
+              <option value="German">德语</option>
+              <option value="Spanish">西班牙语</option>
+            </select>
+          </label>
+          <a class="exportButton" href="http://127.0.0.1:8010/api/listings/export.csv">导出历史 CSV</a>
+          <a class="exportButton" href="http://127.0.0.1:8010/api/listings/export.xlsx">导出 Excel</a>
+        </div>
+      </section>
+
+      <section class="metrics">
+        <div>
+          <strong>结构化录入</strong>
+          <span>用表单替代直接编辑 JSON，适合演示和面试讲解。</span>
+        </div>
+        <div>
+          <strong>竞品导入</strong>
+          <span>支持 CSV 导入竞品标题、卖点、关键词、价格和评分。</span>
+        </div>
+        <div>
+          <strong>A/B 对比</strong>
+          <span>输出两个版本并用评分解释哪版更适合上线。</span>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <form class="inputPanel" id="listingForm">
+          <div class="panelHeader">
+            <div>
+              <h2>商品信息录入</h2>
+              <p>默认生成中文 Listing，也可切换英语、日语、德语、西班牙语。</p>
+            </div>
+            <button type="submit" id="generateButton">生成 Listing</button>
+          </div>
+
+          <div class="formGrid">
+            <label>
+              商品名称
+              <input id="name" value="Portable Electric Blender" />
+            </label>
+            <label>
+              商品类目
+              <input id="category" value="personal blender" />
+            </label>
+            <label>
+              目标市场
+              <select id="target_market">
+                <option value="United States">美国</option>
+                <option value="Japan">日本</option>
+                <option value="Germany">德国</option>
+                <option value="Spain">西班牙</option>
+              </select>
+            </label>
+            <label>
+              输出语言
+              <select id="target_language">
+                <option value="Chinese" selected>中文</option>
+                <option value="English">英语</option>
+                <option value="Japanese">日语</option>
+                <option value="German">德语</option>
+                <option value="Spanish">西班牙语</option>
+              </select>
+            </label>
+            <label>
+              材质
+              <input id="material" value="BPA-free plastic" />
+            </label>
+            <label>
+              尺寸 / 规格
+              <input id="size" value="380ml" />
+            </label>
+            <label>
+              价格区间
+              <input id="price_range" value="$19-$29" />
+            </label>
+            <label>
+              品牌语气
+              <input id="brand_tone" value="modern and reliable" />
+            </label>
+          </div>
+
+          <label class="fullField">
+            核心卖点，用逗号分隔
+            <textarea id="selling_points">USB rechargeable, easy to clean, compact bottle design</textarea>
+          </label>
+
+          <label class="fullField">
+            使用场景，用逗号分隔
+            <textarea id="use_cases">smoothies, travel, office</textarea>
+          </label>
+
+          <section class="csvPanel">
+            <div>
+              <h2>竞品 CSV 导入</h2>
+              <p>字段：title, bullet_points, keywords, price, rating, review_summary。多个卖点或关键词用英文分号分隔。</p>
+            </div>
+            <input type="file" id="csvInput" accept=".csv,text/csv" />
+            <div class="competitorTableWrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>竞品标题</th>
+                    <th>关键词</th>
+                    <th>价格</th>
+                    <th>评分</th>
+                  </tr>
+                </thead>
+                <tbody id="competitorRows"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <details class="payloadPreview">
+            <summary>查看即将提交给后端的结构化 JSON</summary>
+            <pre id="payloadPreview"></pre>
+          </details>
+
+          <p class="status" id="statusText">已载入样例数据，可以直接生成。</p>
+        </form>
+
+        <section class="resultPanel" id="resultPanel">
+          <div class="emptyState">
+            <h2>生成结果会显示在这里</h2>
+            <p>点击“生成 Listing”后，可以看到 A/B 两版标题、五点描述、关键词、广告文案、评分和优化理由。</p>
+          </div>
+        </section>
+      </section>
+
+      <section class="historyPanel">
+        <div class="historyHeader">
+          <div>
+            <h2>历史生成记录</h2>
+            <p>点击任意记录，可把当次生成结果加载到右侧复盘区。</p>
+          </div>
+          <div class="historyActions">
+            <button type="button" id="refreshHistoryButton">刷新历史</button>
+            <button type="button" class="dangerButton" id="clearHistoryButton">清空历史</button>
+          </div>
+        </div>
+        <div class="historyList" id="historyList">
+          <p class="historyEmpty">暂无历史记录，生成一次 Listing 后会显示在这里。</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
