@@ -3,68 +3,110 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>跨境电商 Listing 优化 Agent</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <title>跨境 Listing Agent</title>
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <section class="topbar">
+    <header class="app-header">
+      <a class="brand" href="https://www.aiworkbox.cn/demos/crossborder-listing" aria-label="返回 AI Agent 作品集">
+        <span class="brand-mark">LA</span>
+        <span>
+          <strong>Cross-border Listing Agent</strong>
+          <small>跨境商品上架与 A/B Listing 优化 Demo</small>
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="页面导航">
+        <a href="#workspace">工作台</a>
+        <a href="#result">结果</a>
+        <a href="#history">历史</a>
+      </nav>
+      <div class="header-actions">
+        <button class="button button-secondary" id="loadSampleButton" type="button">载入样例</button>
+        <button class="button button-primary" id="generateButton" type="submit" form="listingForm">生成 Listing</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
         <div>
-          <p class="eyebrow">跨境电商运营效率工具</p>
-          <h1>Listing 优化 Agent</h1>
-          <p class="subtitle">录入商品信息，导入竞品 CSV，自动生成标题、五点描述、SEO 关键词、广告文案和 A/B 评分。</p>
+          <p class="eyebrow">AGENT DEMO 04 / E-COMMERCE OPS</p>
+          <h1>跨境商品 Listing 优化控制台</h1>
+          <p class="lead">
+            面向跨境电商运营的 Agent 工作流：录入商品资料、导入竞品信号，自动生成 A/B Listing、评分拆解、本地化建议和可导出的交付物。
+          </p>
+          <div class="hero-tags">
+            <span>Mock LLM</span>
+            <span>CSV Import</span>
+            <span>A/B Score</span>
+            <span>Static Vercel Demo</span>
+          </div>
         </div>
-        <div class="topActions">
-          <label class="languageSwitch">
-            生成语言
-            <select id="global_language">
-              <option value="Chinese" selected>中文</option>
-              <option value="English">英语</option>
-              <option value="Japanese">日语</option>
-              <option value="German">德语</option>
-              <option value="Spanish">西班牙语</option>
-            </select>
-          </label>
-          <a class="exportButton" href="http://127.0.0.1:8010/api/listings/export.csv">导出历史 CSV</a>
-          <a class="exportButton" href="http://127.0.0.1:8010/api/listings/export.xlsx">导出 Excel</a>
-        </div>
+        <aside class="status-card">
+          <div class="status-title">
+            <span class="pulse"></span>
+            <strong id="statusTitle">演示就绪</strong>
+          </div>
+          <p id="statusText">使用安全样例数据演示，不包含真实店铺或客户信息。</p>
+          <dl>
+            <div><dt>目标市场</dt><dd id="marketStat">United States</dd></div>
+            <div><dt>竞品数量</dt><dd id="competitorStat">3</dd></div>
+            <div><dt>历史记录</dt><dd id="historyStat">0</dd></div>
+          </dl>
+        </aside>
       </section>
 
-      <section class="metrics">
-        <div>
-          <strong>结构化录入</strong>
-          <span>用表单替代直接编辑 JSON，适合演示和面试讲解。</span>
-        </div>
-        <div>
-          <strong>竞品导入</strong>
-          <span>支持 CSV 导入竞品标题、卖点、关键词、价格和评分。</span>
-        </div>
-        <div>
-          <strong>A/B 对比</strong>
-          <span>输出两个版本并用评分解释哪版更适合上线。</span>
-        </div>
+      <section class="metrics" aria-label="演示能力">
+        <article>
+          <span>输入</span>
+          <strong>商品 + 竞品 CSV</strong>
+          <p>把标题、卖点、关键词、价格、评分和评论摘要结构化。</p>
+        </article>
+        <article>
+          <span>生成</span>
+          <strong>A/B Listing</strong>
+          <p>输出标题、五点描述、SEO 词和广告短文案。</p>
+        </article>
+        <article>
+          <span>评估</span>
+          <strong>5 维评分</strong>
+          <p>从标题完整度、关键词覆盖、卖点清晰度、本地化和转化潜力解释结果。</p>
+        </article>
+        <article>
+          <span>交付</span>
+          <strong>CSV / Excel</strong>
+          <p>前端直接导出演示历史，方便模拟运营交接。</p>
+        </article>
       </section>
 
-      <section class="workspace">
-        <form class="inputPanel" id="listingForm">
-          <div class="panelHeader">
+      <section class="workspace" id="workspace">
+        <form class="panel input-panel" id="listingForm">
+          <div class="panel-heading">
             <div>
+              <p class="section-kicker">01 / Product Brief</p>
               <h2>商品信息录入</h2>
-              <p>默认生成中文 Listing，也可切换英语、日语、德语、西班牙语。</p>
             </div>
-            <button type="submit" id="generateButton">生成 Listing</button>
+            <label class="field compact">
+              输出语言
+              <select id="target_language">
+                <option value="Chinese">中文</option>
+                <option value="English">English</option>
+                <option value="Japanese">日本語</option>
+                <option value="German">Deutsch</option>
+                <option value="Spanish">Español</option>
+              </select>
+            </label>
           </div>
 
-          <div class="formGrid">
-            <label>
+          <div class="form-grid">
+            <label class="field">
               商品名称
-              <input id="name" value="Portable Electric Blender" />
+              <input id="name" required />
             </label>
-            <label>
+            <label class="field">
               商品类目
-              <input id="category" value="personal blender" />
+              <input id="category" required />
             </label>
-            <label>
+            <label class="field">
               目标市场
               <select id="target_market">
                 <option value="United States">美国</option>
@@ -73,98 +115,103 @@
                 <option value="Spain">西班牙</option>
               </select>
             </label>
-            <label>
-              输出语言
-              <select id="target_language">
-                <option value="Chinese" selected>中文</option>
-                <option value="English">英语</option>
-                <option value="Japanese">日语</option>
-                <option value="German">德语</option>
-                <option value="Spanish">西班牙语</option>
-              </select>
-            </label>
-            <label>
-              材质
-              <input id="material" value="BPA-free plastic" />
-            </label>
-            <label>
-              尺寸 / 规格
-              <input id="size" value="380ml" />
-            </label>
-            <label>
+            <label class="field">
               价格区间
-              <input id="price_range" value="$19-$29" />
+              <input id="price_range" required />
             </label>
-            <label>
+            <label class="field">
+              材质
+              <input id="material" required />
+            </label>
+            <label class="field">
+              尺寸 / 规格
+              <input id="size" required />
+            </label>
+            <label class="field field-full">
               品牌语气
-              <input id="brand_tone" value="modern and reliable" />
+              <input id="brand_tone" required />
+            </label>
+            <label class="field field-full">
+              核心卖点，用逗号分隔
+              <textarea id="selling_points" required rows="3"></textarea>
+            </label>
+            <label class="field field-full">
+              使用场景，用逗号分隔
+              <textarea id="use_cases" required rows="3"></textarea>
             </label>
           </div>
-
-          <label class="fullField">
-            核心卖点，用逗号分隔
-            <textarea id="selling_points">USB rechargeable, easy to clean, compact bottle design</textarea>
-          </label>
-
-          <label class="fullField">
-            使用场景，用逗号分隔
-            <textarea id="use_cases">smoothies, travel, office</textarea>
-          </label>
-
-          <section class="csvPanel">
-            <div>
-              <h2>竞品 CSV 导入</h2>
-              <p>字段：title, bullet_points, keywords, price, rating, review_summary。多个卖点或关键词用英文分号分隔。</p>
-            </div>
-            <input type="file" id="csvInput" accept=".csv,text/csv" />
-            <div class="competitorTableWrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>竞品标题</th>
-                    <th>关键词</th>
-                    <th>价格</th>
-                    <th>评分</th>
-                  </tr>
-                </thead>
-                <tbody id="competitorRows"></tbody>
-              </table>
-            </div>
-          </section>
-
-          <details class="payloadPreview">
-            <summary>查看即将提交给后端的结构化 JSON</summary>
-            <pre id="payloadPreview"></pre>
-          </details>
-
-          <p class="status" id="statusText">已载入样例数据，可以直接生成。</p>
         </form>
 
-        <section class="resultPanel" id="resultPanel">
-          <div class="emptyState">
-            <h2>生成结果会显示在这里</h2>
-            <p>点击“生成 Listing”后，可以看到 A/B 两版标题、五点描述、关键词、广告文案、评分和优化理由。</p>
+        <section class="panel competitors-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">02 / Competitor Signals</p>
+              <h2>竞品 CSV 导入</h2>
+            </div>
+            <label class="file-button">
+              导入 CSV
+              <input type="file" id="csvInput" accept=".csv,text/csv" />
+            </label>
           </div>
+          <p class="helper">字段：title, bullet_points, keywords, price, rating, review_summary。也可以直接使用页面内置样例。</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>竞品标题</th>
+                  <th>关键词</th>
+                  <th>价格</th>
+                  <th>评分</th>
+                </tr>
+              </thead>
+              <tbody id="competitorRows"></tbody>
+            </table>
+          </div>
+          <details class="payload-preview">
+            <summary>查看结构化输入 JSON</summary>
+            <pre id="payloadPreview"></pre>
+          </details>
         </section>
       </section>
 
-      <section class="historyPanel">
-        <div class="historyHeader">
+      <section class="result-layout" id="result">
+        <section class="panel result-panel" id="resultPanel">
+          <div class="empty-state">
+            <p class="section-kicker">03 / Generation Result</p>
+            <h2>生成结果会显示在这里</h2>
+            <p>点击“生成 Listing”后，页面会展示竞品洞察、A/B 两版 Listing、评分拆解和推荐理由。</p>
+          </div>
+        </section>
+
+        <aside class="panel script-panel">
+          <p class="section-kicker">04 / Interview Script</p>
+          <h2>面试讲解路径</h2>
+          <ol>
+            <li>先说明跨境运营痛点：Listing 优化依赖竞品整理、关键词、本地化和转化判断。</li>
+            <li>展示商品结构化录入和竞品 CSV 导入，说明 Agent 的输入边界。</li>
+            <li>生成 A/B 版本，讲评分维度如何帮助运营选择可上线版本。</li>
+            <li>点击二次优化，展示 SEO、转化、简洁和本地化方向的迭代能力。</li>
+            <li>最后导出 CSV / Excel，模拟交付给运营团队。</li>
+          </ol>
+        </aside>
+      </section>
+
+      <section class="panel history-panel" id="history">
+        <div class="panel-heading">
           <div>
+            <p class="section-kicker">05 / History Review</p>
             <h2>历史生成记录</h2>
-            <p>点击任意记录，可把当次生成结果加载到右侧复盘区。</p>
           </div>
-          <div class="historyActions">
-            <button type="button" id="refreshHistoryButton">刷新历史</button>
-            <button type="button" class="dangerButton" id="clearHistoryButton">清空历史</button>
+          <div class="history-actions">
+            <button class="button button-secondary" id="exportCsvButton" type="button">导出 CSV</button>
+            <button class="button button-secondary" id="exportExcelButton" type="button">导出 Excel</button>
+            <button class="button button-danger" id="clearHistoryButton" type="button">清空</button>
           </div>
         </div>
-        <div class="historyList" id="historyList">
-          <p class="historyEmpty">暂无历史记录，生成一次 Listing 后会显示在这里。</p>
-        </div>
+        <div class="history-list" id="historyList"></div>
       </section>
     </main>
 
-    <script src="./app.js"></script>
+    <script src="/app.js?v=20260716-static-demo"></script>
   </body>
 </html>
