@@ -152,6 +152,7 @@ h1 {
   line-height: 0.95;
   margin-bottom: 22px;
   max-width: 900px;
+  overflow-wrap: anywhere;
 }
 
 h2 {
@@ -690,7 +691,15 @@ meter {
 }
 
 @media (max-width: 740px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   main {
+    max-width: 100%;
+    overflow-x: hidden;
     padding-inline: 14px;
   }
 
@@ -723,6 +732,30 @@ meter {
   }
 
   h1 {
-    font-size: 42px;
+    font-size: 32px;
+    line-height: 1.14;
+    max-width: 320px;
+    word-break: break-all;
+  }
+
+  .hero,
+  .hero > div,
+  .workspace,
+  .workspace > *,
+  .result-layout,
+  .result-layout > *,
+  .hero-tags,
+  .status-card,
+  .panel,
+  .metrics article {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .hero-tags span,
+  .source-pill {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
   }
 }
