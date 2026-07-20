@@ -55,13 +55,31 @@ a {
   border-bottom: 1px solid var(--line);
   display: grid;
   gap: 18px;
-  grid-template-columns: minmax(260px, 1fr) auto auto;
+  grid-template-columns: auto minmax(260px, 1fr) auto auto;
   left: 0;
   padding: 14px clamp(18px, 5vw, 64px);
   position: sticky;
   right: 0;
   top: 0;
   z-index: 10;
+}
+
+.back-link {
+  align-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 7px;
+  color: var(--ink);
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 900;
+  min-height: 38px;
+  padding: 0 13px;
+  white-space: nowrap;
+}
+
+.back-link:hover {
+  border-color: var(--green);
+  color: var(--green);
 }
 
 .brand {
@@ -147,12 +165,14 @@ p {
 }
 
 h1 {
-  font-size: clamp(42px, 6vw, 76px);
+  font-size: clamp(38px, 4.2vw, 56px);
   letter-spacing: 0;
-  line-height: 0.95;
+  line-height: 1.06;
   margin-bottom: 22px;
-  max-width: 900px;
-  overflow-wrap: anywhere;
+  max-width: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 h2 {
@@ -735,6 +755,9 @@ meter {
     font-size: 32px;
     line-height: 1.14;
     max-width: 320px;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
     word-break: break-all;
   }
 
