@@ -724,7 +724,35 @@ meter {
   }
 
   .app-header {
+    align-items: center;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: auto minmax(0, 1fr);
     padding-inline: 14px;
+  }
+
+  .back-link {
+    min-height: 34px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand > span {
+    min-width: 0;
+  }
+
+  .brand small {
+    display: none;
+  }
+
+  .brand strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .header-actions,
@@ -737,6 +765,20 @@ meter {
     display: grid;
     grid-template-columns: 1fr;
     width: 100%;
+  }
+
+  .header-actions,
+  .nav-links {
+    grid-column: 1 / -1;
+  }
+
+  .nav-links {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .header-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .panel-heading,
@@ -754,7 +796,7 @@ meter {
   h1 {
     font-size: 32px;
     line-height: 1.14;
-    max-width: 320px;
+    max-width: 100%;
     overflow: visible;
     text-overflow: clip;
     white-space: normal;
